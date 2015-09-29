@@ -1,3 +1,6 @@
+div.time-picker {
+    font-family:"Arial";
+}
 div.time-picker input {
   float: left;
   width: 100%;
@@ -66,7 +69,6 @@ div.time-picker div.clock div.face div.centre div.prompt {
   color: #026aa7;
   font-weight: bold;
   line-height: normal;
-  font-family: "Open Sans";
 }
 div.time-picker div.clock div.face div.centre div.am-pm {
   margin-top: 10px;

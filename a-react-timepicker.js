@@ -1,15 +1,17 @@
 "use strict";
 
 (function (global, factory) {
-	if (typeof exports === "object" && typeof module !== "undefined") module.exports = factory();
-	if (typeof define === "function" && define.amd) define(factory);
-	global.AReactTimepicker = factory();
-})(undefined, function () {
+    if (typeof exports === "object" && typeof module !== "undefined")
+        module.exports = factory();
+    if (typeof define === "function" && define.amd)
+        define(factory);
+    global.AReactTimepicker = factory();
+}(this, function () {
 	var React = typeof require === "function" ? require("react") : window.React;
 
 	var CLOCK_SIZE = 182;
 
-	module.exports = React.createClass({
+	var Timepicker = React.createClass({
 		displayName: "exports",
 
 		getInitialState: function getInitialState() {
@@ -81,7 +83,7 @@
 		},
 
 		formatTime: function formatTime() {
-			return this.state.hour.toString().pad(2) + ":" + this.state.minute.toString().pad(2) + " " + (this.state.am ? "AM" : "PM");
+			return _pad(this.state.hour.toString(), 2) + ":" + _pad(this.state.minute.toString(), 2) + " " + (this.state.am ? "AM" : "PM");
 		},
 
 		render: function render() {
@@ -168,7 +170,7 @@
 					React.createElement(
 						"span",
 						{ className: "hour" },
-						this.props.hour.toString().pad(2)
+						_pad(this.props.hour, 2)
 					),
 					React.createElement(
 						"span",
@@ -178,7 +180,7 @@
 					React.createElement(
 						"span",
 						{ className: "minute" },
-						this.props.minute.toString().pad(2)
+						_pad(this.props.minute, 2)
 					),
 					React.createElement(
 						"span",
@@ -221,7 +223,7 @@
 
 		buildMinutes: function buildMinutes() {
 			var minutes = [];
-			for (var i = 1; i <= 12; i++) minutes.push(((i === 12 ? 0 : i) * 5).toString().pad(2));
+			for (var i = 1; i <= 12; i++) minutes.push(_pad(((i === 12 ? 0 : i) * 5), 2));
 			return minutes;
 		},
 
@@ -267,11 +269,6 @@
 	var Face = React.createClass({
 		displayName: "Face",
 
-		pad: function pad(value) {
-			value = value.toString();
-			return value.length === 1 ? "0" + value : value;
-		},
-
 		render: function render() {
 			return React.createElement(
 				"div",
@@ -280,7 +277,7 @@
 					return React.createElement(
 						"div",
 						{ key: i, className: "position position-" + (i + 1) + (parseInt(this.props.selected) === parseInt(value) ? " selected" : ""), onClick: this.props.onClick.bind(null, value) },
-						this.pad(value)
+						_pad(value, 2)
 					);
 				}).bind(this)),
 				React.createElement(
@@ -295,4 +292,13 @@
 			);
 		}
 	});
-});
+
+	function _pad(value, length) {
+		value = value.toString();
+		while (value.length < length)
+			value = "0" + value;
+		return value;
+	}
+
+    return Timepicker;
+}));
