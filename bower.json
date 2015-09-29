@@ -1,0 +1,22 @@
+{
+  "name": "a-react-timepicker",
+  "main": "a-react-timepicker.js",
+  "version": "0.0.1",
+  "homepage": "https://github.com/chrisharrington/a-react-timepicker",
+  "authors": [
+    "Chris Harrington <chrisharrington99@gmail.com>"
+  ],
+  "description": "A React timepicker.",
+  "moduleType": [
+    "amd",
+    "node"
+  ],
+  "keywords": [
+    "react",
+    "timepicker"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "react": "~0.13.3"
+  }
+}
