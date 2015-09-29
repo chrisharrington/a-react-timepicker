@@ -1,18 +1,18 @@
 "use strict";
 
 (function (global, factory) {
-    if (typeof exports === "object" && typeof module !== "undefined")
-        module.exports = factory();
-    if (typeof define === "function" && define.amd)
-        define(factory);
-    global.AReactTimepicker = factory();
-}(this, function () {
+	if (typeof exports === "object" && typeof module !== "undefined") module.exports = factory();
+	if (typeof define === "function" && define.amd) define(factory);
+	global.AReactTimepicker = factory();
+})(undefined, function () {
 	var React = typeof require === "function" ? require("react") : window.React;
 
 	var CLOCK_SIZE = 182;
 
 	module.exports = React.createClass({
-		getInitialState: function() {
+		displayName: "exports",
+
+		getInitialState: function getInitialState() {
 			return {
 				visible: false,
 				hour: 12,
@@ -25,44 +25,42 @@
 			};
 		},
 
-		componentWillMount: function() {
+		componentWillMount: function componentWillMount() {
 			document.addEventListener("click", this.hideOnDocumentClick);
 		},
 
-		componentWillUnmount: function() {
+		componentWillUnmount: function componentWillUnmount() {
 			document.removeEventListener("click", this.hideOnDocumentClick);
 		},
 
-		show: function() {
+		show: function show() {
 			var trigger = this.refs.trigger.getDOMNode(),
-				rect = trigger.getBoundingClientRect(),
-				isTopHalf = rect.top > window.innerHeight/2;
+			    rect = trigger.getBoundingClientRect(),
+			    isTopHalf = rect.top > window.innerHeight / 2;
 
 			this.setState({
 				visible: true,
 				position: {
-					top: isTopHalf ? (rect.top + window.scrollY - CLOCK_SIZE - 3) : (rect.top + trigger.clientHeight + window.scrollY + 3),
+					top: isTopHalf ? rect.top + window.scrollY - CLOCK_SIZE - 3 : rect.top + trigger.clientHeight + window.scrollY + 3,
 					left: rect.left
 				}
 			});
 		},
 
-		hide: function() {
+		hide: function hide() {
 			this.setState({
 				visible: false
 			});
 		},
 
-		hideOnDocumentClick: function(e) {
-			if (!this.parentsHaveClassName(e.target, "time-picker"))
-				this.hide();
+		hideOnDocumentClick: function hideOnDocumentClick(e) {
+			if (!this.parentsHaveClassName(e.target, "time-picker")) this.hide();
 		},
 
-		parentsHaveClassName: function(element, className) {
+		parentsHaveClassName: function parentsHaveClassName(element, className) {
 			var parent = element;
 			while (parent) {
-				if (parent.className && parent.className.indexOf(className) > -1)
-					return true;
+				if (parent.className && parent.className.indexOf(className) > -1) return true;
 
 				parent = parent.parentNode;
 			}
@@ -70,7 +68,7 @@
 			return false;
 		},
 
-		onTimeChanged: function(hour, minute, am) {
+		onTimeChanged: function onTimeChanged(hour, minute, am) {
 			this.setState({
 				hour: hour,
 				minute: minute,
@@ -78,42 +76,45 @@
 			});
 		},
 
-		onDone: function() {
+		onDone: function onDone() {
 			this.hide();
 		},
 
-		formatTime: function() {
+		formatTime: function formatTime() {
 			return this.state.hour.toString().pad(2) + ":" + this.state.minute.toString().pad(2) + " " + (this.state.am ? "AM" : "PM");
 		},
 
-		render: function() {
-			return <div className="time-picker">
-				<input ref="trigger" type="text" disabled value={this.formatTime()} onClick={this.show} />
-				<Clock visible={this.state.visible} position={this.state.position} onTimeChanged={this.onTimeChanged} onDone={this.onDone} hour={this.state.hour} minute={this.state.minute} am={this.state.am} />
-			</div>;
+		render: function render() {
+			return React.createElement(
+				"div",
+				{ className: "time-picker" },
+				React.createElement("input", { ref: "trigger", type: "text", disabled: true, value: this.formatTime(), onClick: this.show }),
+				React.createElement(Clock, { visible: this.state.visible, position: this.state.position, onTimeChanged: this.onTimeChanged, onDone: this.onDone, hour: this.state.hour, minute: this.state.minute, am: this.state.am })
+			);
 		}
 	});
 
 	var Clock = React.createClass({
-	    getInitialState: function() {
-	        return {
-	            hoursVisible: true,
-	            minutesVisible: false,
-	            amPmVisible: false,
-				position: "below"
-	        };
-	    },
+		displayName: "Clock",
 
-		componentWillReceiveProps: function(props) {
-			if (this.props.visible && !props.visible)
-				this.setState({
-					hoursVisible: true,
-					minutesVisible: false,
-					amPmVisible: false
-				});
+		getInitialState: function getInitialState() {
+			return {
+				hoursVisible: true,
+				minutesVisible: false,
+				amPmVisible: false,
+				position: "below"
+			};
 		},
 
-		getTime: function() {
+		componentWillReceiveProps: function componentWillReceiveProps(props) {
+			if (this.props.visible && !props.visible) this.setState({
+				hoursVisible: true,
+				minutesVisible: false,
+				amPmVisible: false
+			});
+		},
+
+		getTime: function getTime() {
 			return {
 				hour: this.props.hour,
 				minute: this.props.minute,
@@ -121,7 +122,7 @@
 			};
 		},
 
-		onHourChanged: function(hour) {
+		onHourChanged: function onHourChanged(hour) {
 			this.props.onTimeChanged(hour, this.props.minute, this.props.am);
 
 			this.setState({
@@ -130,7 +131,7 @@
 			});
 		},
 
-		onMinuteChanged: function(minute) {
+		onMinuteChanged: function onMinuteChanged(minute) {
 			this.props.onTimeChanged(this.props.hour, minute, this.props.am);
 
 			this.setState({
@@ -139,7 +140,7 @@
 			});
 		},
 
-		onAmPmChanged: function(am) {
+		onAmPmChanged: function onAmPmChanged(am) {
 			this.props.onDone();
 			this.props.onTimeChanged(this.props.hour, this.props.minute, am);
 
@@ -150,87 +151,148 @@
 			});
 		},
 
-		style: function() {
+		style: function style() {
 			return {
 				top: this.props.position.top,
 				left: this.props.position.left
 			};
 		},
 
-		render: function() {
-			return <div className={"clock " + (this.props.visible ? "clock-show" : "clock-hide")} style={this.style()}>
-				<div className="time hidden">
-					<span className="hour">{this.props.hour.toString().pad(2)}</span>
-					<span>:</span>
-					<span className="minute">{this.props.minute.toString().pad(2)}</span>
-					<span> </span>
-					<span className="am-pm">{this.props.am ? "AM" : "PM"}</span>
-				</div>
-				<div className="clock-face-wrapper">
-		            <Hours visible={this.state.hoursVisible} time={this.getTime()} onClick={this.onHourChanged} />
-					<Minutes visible={this.state.minutesVisible} time={this.getTime()} onClick={this.onMinuteChanged} />
-					<AmPm visible={this.state.amPmVisible} time={this.getTime()} onClick={this.onAmPmChanged} />
-				</div>
-			</div>;
+		render: function render() {
+			return React.createElement(
+				"div",
+				{ className: "clock " + (this.props.visible ? "clock-show" : "clock-hide"), style: this.style() },
+				React.createElement(
+					"div",
+					{ className: "time hidden" },
+					React.createElement(
+						"span",
+						{ className: "hour" },
+						this.props.hour.toString().pad(2)
+					),
+					React.createElement(
+						"span",
+						null,
+						":"
+					),
+					React.createElement(
+						"span",
+						{ className: "minute" },
+						this.props.minute.toString().pad(2)
+					),
+					React.createElement(
+						"span",
+						null,
+						" "
+					),
+					React.createElement(
+						"span",
+						{ className: "am-pm" },
+						this.props.am ? "AM" : "PM"
+					)
+				),
+				React.createElement(
+					"div",
+					{ className: "clock-face-wrapper" },
+					React.createElement(Hours, { visible: this.state.hoursVisible, time: this.getTime(), onClick: this.onHourChanged }),
+					React.createElement(Minutes, { visible: this.state.minutesVisible, time: this.getTime(), onClick: this.onMinuteChanged }),
+					React.createElement(AmPm, { visible: this.state.amPmVisible, time: this.getTime(), onClick: this.onAmPmChanged })
+				)
+			);
 		}
 	});
 
 	var Hours = React.createClass({
-	    buildHours: function() {
-	        var hours = [];
-	        for (var i = 1; i <= 12; i++)
-	            hours.push(i);
-	        return hours;
-	    },
+		displayName: "Hours",
 
-		render: function() {
-			return <Face visible={this.props.visible} type="hours" values={this.buildHours()} prompt="Hour" time={this.props.time} onClick={this.props.onClick} selected={this.props.time.hour} />;
+		buildHours: function buildHours() {
+			var hours = [];
+			for (var i = 1; i <= 12; i++) hours.push(i);
+			return hours;
+		},
+
+		render: function render() {
+			return React.createElement(Face, { visible: this.props.visible, type: "hours", values: this.buildHours(), prompt: "Hour", time: this.props.time, onClick: this.props.onClick, selected: this.props.time.hour });
 		}
 	});
 
 	var Minutes = React.createClass({
-	    buildMinutes: function() {
-	        var minutes = [];
-	        for (var i = 1; i <= 12; i++)
-	            minutes.push(((i === 12 ? 0 : i)*5).toString().pad(2));
-	        return minutes;
-	    },
+		displayName: "Minutes",
 
-		render: function() {
-			return <Face visible={this.props.visible} type="minutes" values={this.buildMinutes()} prompt="Minute" time={this.props.time} onClick={this.props.onClick} selected={this.props.time.minute} />;
+		buildMinutes: function buildMinutes() {
+			var minutes = [];
+			for (var i = 1; i <= 12; i++) minutes.push(((i === 12 ? 0 : i) * 5).toString().pad(2));
+			return minutes;
+		},
+
+		render: function render() {
+			return React.createElement(Face, { visible: this.props.visible, type: "minutes", values: this.buildMinutes(), prompt: "Minute", time: this.props.time, onClick: this.props.onClick, selected: this.props.time.minute });
 		}
 	});
 
 	var AmPm = React.createClass({
-		render: function() {
-			return <div className={"face am-pm" + (this.props.visible ? " face-show" : " face-hide")}>
-	            <div className="centre">
-					<div className="prompt">AM/PM?</div>
-	                <div className="am-pm">
-	                    <span className={this.props.time.am ? "selected" : ""} onClick={this.props.onClick.bind(null, true)}>AM</span>
-						<span className={!this.props.time.am ? "selected" : ""} onClick={this.props.onClick.bind(null, false)}>PM</span>
-	                </div>
-				</div>
-	        </div>;
+		displayName: "AmPm",
+
+		render: function render() {
+			return React.createElement(
+				"div",
+				{ className: "face am-pm" + (this.props.visible ? " face-show" : " face-hide") },
+				React.createElement(
+					"div",
+					{ className: "centre" },
+					React.createElement(
+						"div",
+						{ className: "prompt" },
+						"AM/PM?"
+					),
+					React.createElement(
+						"div",
+						{ className: "am-pm" },
+						React.createElement(
+							"span",
+							{ className: this.props.time.am ? "selected" : "", onClick: this.props.onClick.bind(null, true) },
+							"AM"
+						),
+						React.createElement(
+							"span",
+							{ className: !this.props.time.am ? "selected" : "", onClick: this.props.onClick.bind(null, false) },
+							"PM"
+						)
+					)
+				)
+			);
 		}
 	});
 
-
 	var Face = React.createClass({
-		pad: function(value) {
+		displayName: "Face",
+
+		pad: function pad(value) {
 			value = value.toString();
-			return value.length === 1 ? ("0" + value) : value;
+			return value.length === 1 ? "0" + value : value;
 		},
 
-	    render: function() {
-			return <div className={"face " + this.props.type + (this.props.visible ? " face-show" : " face-hide")}>
-	            {this.props.values.map(function(value, i) {
-	                return <div key={i} className={"position position-" + (i+1) + (parseInt(this.props.selected) === parseInt(value) ? " selected" : "")} onClick={this.props.onClick.bind(null, value)}>{this.pad(value)}</div>;
-	            }.bind(this))}
-				<div className="centre">
-					<div className="prompt">{this.props.prompt}</div>
-				</div>
-			</div>;
+		render: function render() {
+			return React.createElement(
+				"div",
+				{ className: "face " + this.props.type + (this.props.visible ? " face-show" : " face-hide") },
+				this.props.values.map((function (value, i) {
+					return React.createElement(
+						"div",
+						{ key: i, className: "position position-" + (i + 1) + (parseInt(this.props.selected) === parseInt(value) ? " selected" : ""), onClick: this.props.onClick.bind(null, value) },
+						this.pad(value)
+					);
+				}).bind(this)),
+				React.createElement(
+					"div",
+					{ className: "centre" },
+					React.createElement(
+						"div",
+						{ className: "prompt" },
+						this.props.prompt
+					)
+				)
+			);
 		}
 	});
 });
