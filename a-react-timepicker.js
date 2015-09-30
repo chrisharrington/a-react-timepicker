@@ -327,7 +327,7 @@ function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in ob
         buildTick: function buildTick(index) {
             return React.createElement(
                 "div",
-                { key: index, className: "tick " + (index % 5 === 0 ? "big " : ""), style: { transform: "rotate(" + index * 6 + "deg)" } },
+                { key: index, className: "tick " + (index % 5 === 0 ? "big " : ""), style: { transform: "rotate(" + index * 6 + "deg)", WebkitTransform: "rotate(" + index * 6 + "deg)" } },
                 React.createElement("div", null)
             );
         },
