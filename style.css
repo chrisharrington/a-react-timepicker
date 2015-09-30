@@ -267,8 +267,8 @@ div.time-picker div.clock div.face div.long-hand-attachment {
   z-index: 7;
   background: #026aa7;
   position: absolute;
-  top: 72px;
-  left: 72px;
+  top: 73px;
+  left: 73px;
 }
 div.time-picker div.clock div.face div.inner-face {
   position: absolute;
