@@ -8,7 +8,7 @@ function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in ob
     if (typeof exports === "object" && typeof module !== "undefined") module.exports = factory();
     if (typeof define === "function" && define.amd) define(factory);
     (global || window).AReactTimepicker = factory();
-})(undefined, function () {
+})(this, function () {
     var React = typeof require === "function" ? require("react") : window.React;
 
     var CLOCK_SIZE = 222;
