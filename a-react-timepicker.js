@@ -312,10 +312,11 @@ function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in ob
         displayName: "LongHand",
 
         render: function render() {
+            var deg = (this.props.selected / this.props.max * 360);
             return React.createElement(
                 "div",
                 null,
-                React.createElement("div", { className: "long-hand " + this.props.type + "-position-" + this.props.selected }),
+                React.createElement("div", { className: "long-hand", style: { transform: "rotate(" + deg + "deg)", WebkitTransform: "rotate(" + deg + "deg)" } }),
                 React.createElement("div", { className: "long-hand-attachment" })
             );
         }
