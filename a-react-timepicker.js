@@ -92,7 +92,7 @@ function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in ob
             return React.createElement(
                 "div",
                 { className: "time-picker" },
-                React.createElement("input", { ref: "trigger", type: "text", disabled: true, value: this.formatTime(), onClick: this.show }),
+                React.createElement("input", { ref: "trigger", type: "text", readOnly: true, value: this.formatTime(), onClick: this.show }),
                 React.createElement(Clock, { visible: this.state.visible, position: this.state.position, onTimeChanged: this.onTimeChanged, onDone: this.onDone, hour: this.state.hour, minute: this.state.minute, am: this.state.am })
             );
         }
