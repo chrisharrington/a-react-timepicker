@@ -279,7 +279,7 @@ function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in ob
             return React.createElement(
                 "div",
                 null,
-                React.createElement("div", { className: "long-hand", style: { transform: "rotate(" + deg + "deg)", WebkitTransform: "rotate(" + deg + "deg)" } }),
+                React.createElement("div", { className: "long-hand", style: { transform: "rotate(" + deg + "deg) scale(1, 0.8)", WebkitTransform: "rotate(" + deg + "deg) scale(1, 0.8)" } }),
                 React.createElement("div", { className: "long-hand-attachment" })
             );
         }

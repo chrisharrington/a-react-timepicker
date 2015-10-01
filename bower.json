@@ -4,7 +4,7 @@
       "built.js",
       "style.css"
   ],
-  "version": "0.1.17",
+  "version": "0.1.18",
   "homepage": "https://github.com/chrisharrington/a-react-timepicker",
   "authors": [
     "Chris Harrington <chrisharrington99@gmail.com>"
