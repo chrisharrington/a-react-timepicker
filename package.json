@@ -1,0 +1,23 @@
+{
+  "name": "a-react-timepicker",
+  "version": "1.0.0",
+  "description": "A timepicker for React.",
+  "main": "built.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chrisharrington/a-react-timepicker.git"
+  },
+  "keywords": [
+    "react",
+    "timepicker"
+  ],
+  "author": "Chris Harrington <chrisharrington99@gmail.com> (http://dapperdeveloper.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/chrisharrington/a-react-timepicker/issues"
+  },
+  "homepage": "https://github.com/chrisharrington/a-react-timepicker#readme"
+}
